@@ -85,19 +85,38 @@
     <div id="resultados"></div>
 
     <script>
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        const csrfToken = getCookie('csrftoken');
+
+        $.ajaxSetup({
+            headers: { "X-CSRFToken": csrfToken }
+        });
+
         $(document).ready(function() {
             $('#urlForm').on('submit', function(event) {
                 event.preventDefault();
 
                 var url = $('#urlInput').val();
-                var csrfToken = $("input[name='csrfmiddlewaretoken']").val();
 
                 $.ajax({
                     url: '/',
                     type: 'POST',
                     data: {
                         'url': url,
-                        'csrfmiddlewaretoken': csrfToken
                     },
                     success: function(response) {
                         $('#resultados').empty();
