@@ -1,13 +1,22 @@
 # Usar a imagem oficial Python como base
 FROM python:3.10-slim
 
+# Instalar o Rust e ferramentas necessárias (se necessário)
+RUN apt-get update && apt-get install -y \
+    rustc \
+    cargo \
+    build-essential
+
+# Instalar gunicorn diretamente
+RUN pip install gunicorn
+
 # Criar diretório de trabalho
 WORKDIR /app
 
 # Copiar o requirements.txt para a imagem
 COPY requirements.txt .
 
-# Instalar as dependências do projeto com log detalhado e exibir os logs diretamente no console
+# Instalar as dependências do projeto
 RUN pip install --no-cache-dir -r requirements.txt --progress-bar=off -v
 
 # Copiar o resto do código do projeto para a imagem
