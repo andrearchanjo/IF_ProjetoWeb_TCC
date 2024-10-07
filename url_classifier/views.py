@@ -1,12 +1,14 @@
-# url_classifier/views.py
 from django.shortcuts import render
 from django.http import JsonResponse
-from .services.classificar_url import classificar_url  # Importa o service
+from django.views.decorators.csrf import csrf_exempt
 
+from .services.classificar_url import classificar_url
+
+@csrf_exempt
 def home(request):
     if request.method == 'POST':
-        url = request.POST.get('url')  # Pega a URL enviada do frontend
-        resultados = classificar_url(url)  # Chama o service para processar a URL
-        return JsonResponse(resultados)  # Retorna o resultado da classificação como JSON
+        url = request.POST.get('url')
+        resultados = classificar_url(url)
+        return JsonResponse(resultados)
 
-    return render(request, 'home.html')  # Renderiza a página inicial se for uma requisição GET
+    return render(request, 'home.html')
