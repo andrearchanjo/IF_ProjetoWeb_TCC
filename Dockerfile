@@ -7,8 +7,8 @@ WORKDIR /app
 # Copiar o requirements.txt para a imagem
 COPY requirements.txt .
 
-# Instalar as dependências do projeto com log detalhado
-RUN pip install --no-cache-dir -r requirements.txt --progress-bar=off --log /tmp/pip-verbose.log
+# Instalar as dependências do projeto com log detalhado e exibir os logs diretamente no console
+RUN pip install --no-cache-dir -r requirements.txt --progress-bar=off -v
 
 # Copiar o resto do código do projeto para a imagem
 COPY . .
