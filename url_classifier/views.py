@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .services.classificar_url import classificar_url
 
+@csrf_exempt
 def home(request):
     if request.method == 'POST':
         url = request.POST.get('url')
