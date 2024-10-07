@@ -7,8 +7,8 @@ RUN apt-get update && apt-get install -y \
     cargo \
     build-essential
 
-# Instalar gunicorn diretamente
-RUN pip install gunicorn
+# Instalar o gunicorn e django diretamente
+RUN pip install gunicorn Django==5.1.1
 
 # Criar diretório de trabalho
 WORKDIR /app
